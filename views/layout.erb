@@ -1,7 +1,11 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>All Sales Vinyl</title>
+        <title>Theatrix - <%= @page %></title>
+        <link rel='icon' href='/img/icon.png'>
+        <link rel='stylesheet' href='/css/master.css' type='text/css'>
+        <link rel='stylesheet' href='/css/<%= @css %>.css' type='text/css'>
+        <link href='https://fonts.googleapis.com/css?family=Poppins&display=swap' rel='stylesheet'>
     </head>
     <body>
         <%= yield %>
