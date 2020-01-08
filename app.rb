@@ -23,7 +23,7 @@ end
 
 get '/theatres/new' do
     @oage = 'New Theatre'
-    @css = 'New'
+    @css = 'new'
     erb :theatres_new
 end
 post '/theatres' do
@@ -33,5 +33,22 @@ end
 
 get '/theatres/:id' do
     @theatre = Theatre.find(params[:id].to_i)
+    @oage = @theatre.name
+    @css = 'theatre_view'
     erb :theatres_ID
+end
+
+get '/theatres/:id/edit' do
+    @theatre = Theatre.find(params[:id].to_i)
+    @oage = "Editing #{@theatre.name}"
+    @css = 'edit'
+    erb :theatres_ID_edit
+end
+patch '/theatres/:id' do
+  Theatre.find(params[:id].to_i).update(params)
+  redirect to "/theatres/#{params[:id]}"
+end
+delete '/theatres/:id' do
+  Album.find(params[:id].to_i).delete
+  redirect to '/theatres'
 end
