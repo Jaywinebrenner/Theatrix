@@ -8,96 +8,72 @@ require 'pg'
 DB = PG.connect({:dbname => 'theatrix'})
 also_reload 'lib/**/*.rb'
 
+def get_class(type)
+    return Movie if (type == 'movies')
+    return Theatre if (type == 'theatres')
+    nil
+end
+
 get '/' do
     @page = 'Home'
     @css = 'home'
     erb :index
 end
 
-get '/theatres' do
-    @page = 'Theatres'
+get '/:type' do
+    redirect to '/error' unless (['theatres', 'movies'].include? params[:type])
+    type = get_class(params[:type])
+
+    @page = params[:type]
     @css = 'list'
-    @theatres = Theatre.all
-    erb :theatres
+    @items = type.all
+    erb :items
 end
 
-get '/theatres/new' do
-    @page = 'New Theatre'
+get '/:type/new' do
+    redirect to '/error' unless (['theatres', 'movies'].include? params[:type])
+    type = get_class(params[:type])
+
+    @page = "New #{params[:type].capitalize}"
     @css = 'new'
-    erb :theatres_new
+    erb :items_new
 end
-post '/theatres' do
-    Theatre.new(params).save
-    redirect to '/theatres'
+post '/:type' do
+    type = get_class(params[:type])
+
+    type.new(params).save
+    redirect to "/#{params[:type]}"
 end
 
-get '/theatres/:id' do
-    @theatre = Theatre.find(params[:id].to_i)
-    @page = @theatre.name
-    @css = 'item_view'
-    erb :theatres_ID
+get '/:type/:id' do
+    redirect to '/error' unless (['theatres', 'movies'].include? params[:type])
+    type = get_class(params[:type])
+
+    @item = type.find(params[:id].to_i)
+    @page = @item.name
+    @css = 'item_ID'
+    erb :items_ID
 end
 
-get '/theatres/:id/edit' do
-    @theatre = Theatre.find(params[:id].to_i)
-    @page = "Editing #{@theatre.name}"
-    @css = 'item_edit'
-    erb :theatres_ID_edit
+get '/:type/:id/edit' do
+    redirect to '/error' unless (['theatres', 'movies'].include? params[:type])
+    type = get_class(params[:type])
+
+    @item = type.find(params[:id].to_i)
+    @page = "Editing #{@item.name}"
+    @css = 'item_ID_edit'
+    erb :item_ID_edit
 end
-patch '/theatres/:id' do
-    theatre = Theatre.find(params[:id].to_i)
-    theatre.update(params)
-    unless (params[:movie_name] == '' || params[:showtime] == '')
-        theatre.add_showing(params[:movie_name], params[:showtime])
+patch '/:type/:id' do
+    type = get_class(params[:type])
+    item = type.find(params[:id].to_i).update(params)
+    unless (params[:movie_name].empty? || params[:showtime].empty?)
+        item.add_showing(params[:movie_name], params[:showtime])
     end
-    redirect to "/theatres/#{params[:id]}"
+    redirect to "/#{params[:type]}/#{params[:id]}"
 end
-delete '/theatres/:id' do
-    Theatre.find(params[:id].to_i).delete
-    redirect to '/theatres'
-end
-
-#classes are constants so set a variable equal to the type
-
-# movie routes
-
-
-
-get '/movies' do
-    @page = 'Movies'
-    @css = 'list'
-    @movies = Movie.all
-    erb :movies
-end
-
-get '/movies/new' do
-    @page = 'New Movie'
-    @css = 'new'
-    erb :movies_new
-end
-post '/movies' do
-    Movie.new(params).save
-    redirect to '/movies'
-end
-
-get '/movies/:id' do
-    @movie = Movie.find(params[:id].to_i)
-    @page = @movie.name
-    @css = 'item_view'
-    erb :movies_ID
-end
-
-get '/movies/:id/edit' do
-    @movie = Movie.find(params[:id].to_i)
-    @page = "Editing #{@movie.name}"
-    @css = 'item_edit'
-    erb :movies_ID_edit
-end
-patch '/movies/:id' do
-    Movie.find(params[:id].to_i).update(params)
-    redirect to "/movies/#{params[:id]}"
-end
-delete '/movies/:id' do
-    Movie.find(params[:id].to_i).delete
-    redirect to '/movies'
+delete '/:type/:id' do
+    type = get_class(params[:type])
+    type.find(params[:id].to_i).delete
+    redirect to "/#{params[:type]}"
 end

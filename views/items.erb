@@ -1,0 +1,22 @@
+<h1>Theatrix</h1>
+<main>
+    <h2>Find Theatres</h2>
+    <hr>
+
+    <% if @items.any? %>
+    <% @items.each do |item| %>
+    <a class='item' href='/<%= @page %>/<%= item.id %>'>
+        <figure>
+            <img src='<%= (@page == 'theatres') ? item.img : item.poster %>' alt='Image of <%= item.name %>'>
+        </figure>
+        <h3><%= item.name %></h3>
+        <h4>Sorry, we don\'t have the information for this one :(</h4>
+    </a>
+    <hr class='spacer'>
+    <% end %>
+    <% else %>
+    <p class='none'>There aren't any theatres!</p>
+    <% end %>
+
+    <p class='new'>Don't see what you're looking for? Click <a href='/<%= @page %>/new'>here</a> to add a new <%= @page.gsub('s', '') %>!</p>
+</main>

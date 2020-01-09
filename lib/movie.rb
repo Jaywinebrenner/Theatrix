@@ -29,6 +29,7 @@ class Movie
             @rating = attributes[:rating]
             DB.exec("UPDATE movies SET rating = '#{@rating}' WHERE id = #{@id};")
         end
+        self
     end
     def add_showing(theatre, time)
         DB.exec("INSERT INTO showings (theatre_id, movie_id, showtime) VALUES (#{theatre.id}, #{@id}, #{time});")

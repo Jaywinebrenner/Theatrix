@@ -24,6 +24,7 @@ class Theatre
             @location = attributes[:location]
             DB.exec("UPDATE theatres SET location = '#{@location}' WHERE id = #{@id};")
         end
+        self
     end
     def add_showing(movie_name, showtime)
         movie = DB.exec("SELECT * FROM movies WHERE lower(name)='#{movie_name.downcase}';").first

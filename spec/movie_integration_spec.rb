@@ -4,7 +4,7 @@ Capybara.app = Sinatra::Application
 set(:show_exceptions, false)
 
 describe 'create a movie path', {:type => :feature} do
-    it 'creates a movie and then goes to the movie page' do
+    it 'creates a movie and then navigates to the movie page' do
         visit('/')
         click_on('Search Movies')
         click_on('here')
@@ -34,7 +34,7 @@ describe 'create a movie path', {:type => :feature} do
 end
 
 describe 'create a movie path', {:type => :feature} do
-    it 'updates a movie' do
+    it 'deletes a movie' do
         Movie.new({name: "Platoon", runtime: '100', rating: 'R'}).save
         visit('/')
         click_on('Search Movies')
@@ -48,14 +48,3 @@ describe 'create a movie path', {:type => :feature} do
         expect(page).not_to have_content('Platoon')
     end
 end
-
-# describe 'create an movie path', {:type => :feature} do
-#     it 'creates an movie and then goes to the movie page' do
-#         visit('/movies')
-#         save_and_open_page
-#         click_on('Add a new movie')
-#         fill_in('name', :with => 'Yellow Submarine')
-#         click_on('Go!')
-#         expect(page).to have_content('Yellow Submarine')
-#     end
-# end
