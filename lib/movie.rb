@@ -8,7 +8,7 @@ class Movie
         @id = attributes[:id].to_i
     end
     def save
-        @id = DB.exec("INSERT INTO movies (name, runtime, poster, rating) VALUES ('#{@name}', '#{@runtime}', '#{@poster}''#{@rating}') RETURNING id;").first.fetch('id').to_i
+        @id = DB.exec("INSERT INTO movies (name, runtime, poster, rating) VALUES ('#{@name}', '#{@runtime}', '#{@poster}', '#{@rating}') RETURNING id;").first.fetch('id').to_i
         self
     end
     def update(attributes)
@@ -34,7 +34,11 @@ class Movie
         DB.exec("INSERT INTO showings (theatre_id, movie_id, showtime) VALUES (#{theatre.id}, #{@id}, #{time});")
     end
     def ==(other)
-        (@name == other.name) && (@runtime == other.runtime) && (@rating == other.rating) && (@id == other.id)
+        (@name == other.name) &&
+        (@poster == other.poster) &&
+        (@runtime == other.runtime) &&
+        (@rating == other.rating) &&
+        (@id == other.id)
     end
 
     #class methods

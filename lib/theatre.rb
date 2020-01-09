@@ -29,7 +29,10 @@ class Theatre
         DB.exec("INSERT INTO showings (theatre_id, movie_id, showtime) VALUES (#{@id}, #{movie.id}, #{time});")
     end
     def ==(other)
-        (@name == other.name) && (@location == other.location) && (@img = other.img) && (@id == other.id)
+        (@name == other.name) &&
+        (@location == other.location) &&
+        (@img == other.img) &&
+        (@id == other.id)
     end
 
     #class methods
