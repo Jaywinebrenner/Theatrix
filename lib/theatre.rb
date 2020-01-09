@@ -25,8 +25,9 @@ class Theatre
             DB.exec("UPDATE theatres SET location = '#{@location}' WHERE id = #{@id};")
         end
     end
-    def add_showing(movie, time)
-        DB.exec("INSERT INTO showings (theatre_id, movie_id, showtime) VALUES (#{@id}, #{movie.id}, #{time});")
+    def add_showing(movie_name, showtime)
+        movie = DB.exec("SELECT * FROM movies WHERE lower(name)='#{movie_name.downcase}';").first
+        DB.exec("INSERT INTO showings (theatre_id, movie_id, showtime) VALUES (#{@id}, #{movie['id']}, '#{showtime}');")
     end
 
     def delete

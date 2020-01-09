@@ -1,0 +1,15 @@
+<h1>Theatrix</h1>
+<main>
+    <% unless @movie.nil? %>
+    <img src='<%= @movie.poster %>'>
+    <h2><%= @movie.name %></h2>
+    <p><%= @movie.runtime %></p>
+    <p><%= @movie.rating %></p>
+    <% else %>
+    <h2 class='error'>Oh no!</h2>
+    <p class='error'>We couldn't find that movie :(</p>
+    <% end %>
+    <a href='/movies'>Return to Movie List</a>
+
+    <a href="/movies/<%= @movie.id %>/edit">Edit Movie</a>
+</main>

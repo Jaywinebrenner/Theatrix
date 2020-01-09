@@ -45,7 +45,11 @@ get '/theatres/:id/edit' do
     erb :theatres_ID_edit
 end
 patch '/theatres/:id' do
-    Theatre.find(params[:id].to_i).update(params)
+    theatre = Theatre.find(params[:id].to_i)
+    theatre.update(params)
+    unless (params[:movie_name] == '' || params[:showtime] == '')
+        theatre.add_showing(params[:movie_name], params[:showtime])
+    end
     redirect to "/theatres/#{params[:id]}"
 end
 delete '/theatres/:id' do
@@ -53,6 +57,7 @@ delete '/theatres/:id' do
     redirect to '/theatres'
 end
 
+#classes are constants so set a variable equal to the type
 
 # movie routes
 

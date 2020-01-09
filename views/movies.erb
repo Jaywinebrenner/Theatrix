@@ -1,0 +1,25 @@
+<h1>Theatrix</h1>
+<main>
+    <h2>Find Movies</h2>
+    <hr>
+
+    <% if @movies.any? %>
+    <% @movies.each_with_index do |movie, i| %>
+    <% if i > 0 %>
+    <hr class='spacer'>
+    <% end %>
+    <a class='item' href='/movies/<%= movie.id %>'>
+        <figure>
+            <img src='<%= movie.poster %>' alt='Image of <%=movie.name%>'>
+        </figure>
+        <h3><%= movie.name %></h3>
+        <h3><%= movie.runtime %></h3>
+        <h4><%= movie.rating || 'Sorry, we don\'t have the address for this one :(' %></h4>
+    </a>
+    <% end %>
+    <% else %>
+    <p class='none'>There aren't any movies!</p>
+    <% end %>
+
+    <p class='new'>Don't see what you're looking for? Click <a href='/movies/new'>here</a> to add a new movie!</p>
+</main>
