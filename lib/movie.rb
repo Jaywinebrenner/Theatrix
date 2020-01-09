@@ -1,13 +1,14 @@
 class Movie
-    attr_reader :name, :runtime, :rating, :id
+    attr_reader :name, :runtime, :poster, :rating, :id
     def initialize(attributes)
         @name = attributes[:name]
         @runtime = attributes[:runtime].to_i
+        @poster = attributes[:poster]
         @rating = attributes[:rating]
         @id = attributes[:id].to_i
     end
     def save
-        @id = DB.exec("INSERT INTO movies (name, runtime, rating) VALUES ('#{@name}', '#{@runtime}', '#{@rating}') RETURNING id;").first.fetch('id').to_i
+        @id = DB.exec("INSERT INTO movies (name, runtime, poster, rating) VALUES ('#{@name}', '#{@runtime}', '#{@poster}''#{@rating}') RETURNING id;").first.fetch('id').to_i
         self
     end
     def update(attributes)
@@ -20,10 +21,17 @@ class Movie
             @runtime = attributes[:runtime]
             DB.exec("UPDATE movies SET runtime = '#{@runtime}' WHERE id = #{@id};")
         end
+        unless attributes[:poster].nil?
+            @poster = attributes[:poster]
+            DB.exec("UPDATE movies SET poster = '#{@poster}' WHERE id = #{@id};")
+        end
         unless attributes[:rating].nil?
             @rating = attributes[:rating]
             DB.exec("UPDATE movies SET rating = '#{@rating}' WHERE id = #{@id};")
         end
+    end
+    def add_showing(theatre, time)
+        DB.exec("INSERT INTO showings (theatre_id, movie_id, showtime) VALUES (#{theatre.id}, #{@id}, #{time});")
     end
     def ==(other)
         (@name == other.name) && (@runtime == other.runtime) && (@rating == other.rating) && (@id == other.id)

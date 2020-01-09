@@ -1,0 +1,26 @@
+<h1>Theatrix</h1>
+<h2>Edit theatre info for theatre <%= @theatre.name %></h2>
+
+<form action='/theatres/<%= @theatre.id %>' method='post'>
+    <input name='_method' type='hidden' value='patch'>
+
+    <label>
+        Theatre Name
+        <input name='name' type='text' placeholder='<%= @theatre.name %>'>
+    </label>
+    <label>
+        Image URL
+        <input name='image' type='text' placeholder='<%= @theatre.img %>'>
+    </label>
+    <label>
+        Theatre Location
+        <input name='location' type='text' placeholder='<%= @theatre.location %>'>
+    </label>
+    <button type='submit'>Go!</button>
+</form>
+
+<form action='/theatres/<%= @theatre.id %>' method='post'>
+    <input name='_method' type='hidden' value='delete'>
+
+    <button type='submit'>Delete Theatre</button>
+</form>

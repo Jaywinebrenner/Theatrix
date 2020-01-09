@@ -12,14 +12,12 @@ body {
     justify-content: center;
     align-items: center;
     flex-direction: column;
-
 }
 
 #header {
     margin-top: 5rem;
     color: white;
     text-align: center;
-    font-family: 'Poppins', sans-serif;
 }
 #header h1 {
     margin: 0;
@@ -54,5 +52,5 @@ a {
     border-radius: 1.5rem;
 }
 a:hover {
-    box-shadow: 0 0 10px 2px white inset;
+    box-shadow: 0 0 15px 2px white inset;
 }

@@ -1,0 +1,18 @@
+<main>
+    <h2>Find Theatres</h2>
+    <hr>
+
+    <% if @theatres.any? %>
+    <% @theatres.each do |theatre| %>
+    <a class='item' href='/theatres/<%= theatre.id %>'>
+        <img src='<%= theatre.img %>' alt='Image of <%=theatre.name%>'>
+        <h3><%= theatre.name %></h3>
+        <p><%= theatre.location || 'Sorry, we don\'t have the address for this one :(' %></p>
+    </a>
+    <% end %>
+    <% else %>
+    <p class='none'>There aren't any theatres!</p>
+    <% end %>
+
+    <p class='new'>Don't see what you're looking for? Click <a href='/theatres/new'>here</a> to add a new theatre!</p>
+</main>

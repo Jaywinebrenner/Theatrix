@@ -9,20 +9,21 @@ DB = PG.connect({:dbname => 'theatrix'})
 also_reload 'lib/**/*.rb'
 
 get '/' do
+    Theatre.clear
     @page = 'Home'
     @css = 'home'
     erb :index
 end
 
 get '/theatres' do
-    @oage = 'Theatres'
-    @css = 'theatres'
+    @page = 'Theatres'
+    @css = 'list'
     @theatres = Theatre.all
     erb :theatres
 end
 
 get '/theatres/new' do
-    @oage = 'New Theatre'
+    @page = 'New Theatre'
     @css = 'new'
     erb :theatres_new
 end
@@ -33,14 +34,14 @@ end
 
 get '/theatres/:id' do
     @theatre = Theatre.find(params[:id].to_i)
-    @oage = @theatre.name
-    @css = 'theatre_view'
+    @page = @theatre.name
+    @css = 'item_view'
     erb :theatres_ID
 end
 
 get '/theatres/:id/edit' do
     @theatre = Theatre.find(params[:id].to_i)
-    @oage = "Editing #{@theatre.name}"
+    @page = "Editing #{@theatre.name}"
     @css = 'edit'
     erb :theatres_ID_edit
 end
