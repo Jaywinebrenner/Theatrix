@@ -2,7 +2,7 @@ class Movie
     attr_reader :name, :runtime, :poster, :rating, :id
     def initialize(attributes)
         @name = attributes[:name]
-        @runtime = attributes[:runtime].gsub(/[^0-9]/, '').to_i
+        @runtime = attributes.fetch(:runtime, '').gsub(/[^0-9]/, '').to_i
         @poster = attributes[:poster]
         @rating = attributes[:rating]
         @id = attributes[:id].to_i
@@ -18,7 +18,7 @@ class Movie
             DB.exec("UPDATE movies SET name = '#{@name}' WHERE id = #{@id};")
         end
         unless attributes[:runtime].nil?
-            @runtime = attributes[:runtime].gsub(/[^0-9]/, '').to_i
+            @runtime = attributes.fetch(:runtime, '').gsub(/[^0-9]/, '').to_i
             DB.exec("UPDATE movies SET runtime = '#{@runtime}' WHERE id = #{@id};")
         end
         unless attributes[:poster].nil?
@@ -33,6 +33,7 @@ class Movie
     def add_showing(theatre, time)
         DB.exec("INSERT INTO showings (theatre_id, movie_id, showtime) VALUES (#{theatre.id}, #{@id}, #{time});")
     end
+
     def ==(other)
         (@name == other.name) &&
         (@poster == other.poster) &&

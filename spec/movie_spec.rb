@@ -3,14 +3,14 @@ require 'spec_helper.rb'
 describe 'Movie' do
     describe '#==' do
         it 'compares for equality' do
-            movie1 = Movie.new({name: 'BlindSpotting', rating: 'R', runtime: 96})
-            movie2 = Movie.new({name: 'BlindSpotting', rating: 'R', runtime: 96})
+            movie1 = Movie.new({name: 'BlindSpotting', rating: 'R', runtime: '96'})
+            movie2 = Movie.new({name: 'BlindSpotting', rating: 'R', runtime: '96'})
             expect(movie1 == movie2).to eq(true)
         end
     end
     describe '#save' do
         it 'saves a movie' do
-            movie = Movie.new({name: 'BlindSpotting', rating: 'R', runtime: 96}).save
+            movie = Movie.new({name: 'BlindSpotting', rating: 'R', runtime: '96'}).save
             expect(Movie.all).to include(movie)
         end
     end
