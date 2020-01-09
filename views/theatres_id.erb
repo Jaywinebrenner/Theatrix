@@ -1,3 +1,4 @@
+<h1>Theatrix</h1>
 <main>
     <% unless @theatre.nil? %>
     <img src='<%= @theatre.img %>'>
@@ -8,4 +9,6 @@
     <p class='error'>We couldn't find that theatre :(</p>
     <% end %>
     <a href='/theatres'>Return to Theatre List</a>
+
+    <a href="/theatres/<%= @theatre.id %>/edit">Edit Theatre</a>
 </main>

@@ -17,17 +17,23 @@ class Theatre
             DB.exec("UPDATE theatres SET name = '#{@name}' WHERE id = #{@id};")
         end
         unless attributes[:img].nil?
-            @runtime = attributes[:img]
+            @img = attributes[:img]
             DB.exec("UPDATE theatres SET img = '#{@img}' WHERE id = #{@id};")
         end
         unless attributes[:rating].nil?
-            @rating = attributes[:location]
+            @location = attributes[:location]
             DB.exec("UPDATE theatres SET location = '#{@location}' WHERE id = #{@id};")
         end
     end
     def add_showing(movie, time)
         DB.exec("INSERT INTO showings (theatre_id, movie_id, showtime) VALUES (#{@id}, #{movie.id}, #{time});")
     end
+
+    def delete
+        DB.exec("DELETE FROM theatres WHERE id = #{@id};")
+        DB.exec("DELETE FROM showings WHERE theatre_id = #{@id};")
+    end
+
     def ==(other)
         (@name == other.name) &&
         (@location == other.location) &&

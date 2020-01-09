@@ -36,3 +36,34 @@ hr {
 .new a:hover {
     color: #9c1e1e;
 }
+
+.item {
+    height: 20rem;
+    display: grid;
+    grid-template-columns: 50% 1fr;
+    grid-template-rows: repeat(3, 1fr);
+    margin-top: 2rem;
+}
+
+.spacer {
+    border: 1px solid gray;
+    width: 80%;
+}
+.item figure {
+    grid-area: 1 / 1 / 4 / 2;
+    margin: 1rem;
+    padding: 2.5rem;
+    max-width: 100%;
+    max-height: 100%;
+    border: 2px solid black;
+    border-image: url('../img/border.png') 100 / 24px;
+}
+.item figure img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.item h3 { grid-area: 1 / 2 / 2 / 4; }
+.item h4 { grid-area: 2 / 2 / 3 / 4; }
+.item p { grid-area: 3 / 2 / 4 / 4; }

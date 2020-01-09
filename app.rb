@@ -9,7 +9,6 @@ DB = PG.connect({:dbname => 'theatrix'})
 also_reload 'lib/**/*.rb'
 
 get '/' do
-    Theatre.clear
     @page = 'Home'
     @css = 'home'
     erb :index
@@ -42,14 +41,58 @@ end
 get '/theatres/:id/edit' do
     @theatre = Theatre.find(params[:id].to_i)
     @page = "Editing #{@theatre.name}"
-    @css = 'edit'
+    @css = 'item_edit'
     erb :theatres_ID_edit
 end
 patch '/theatres/:id' do
-  Theatre.find(params[:id].to_i).update(params)
-  redirect to "/theatres/#{params[:id]}"
+    Theatre.find(params[:id].to_i).update(params)
+    redirect to "/theatres/#{params[:id]}"
 end
 delete '/theatres/:id' do
-  Album.find(params[:id].to_i).delete
-  redirect to '/theatres'
+    Theatre.find(params[:id].to_i).delete
+    redirect to '/theatres'
+end
+
+
+# movie routes
+
+
+
+get '/movies' do
+    @page = 'Movies'
+    @css = 'list'
+    @movies = Movie.all
+    erb :movies
+end
+
+get '/movies/new' do
+    @page = 'New Movie'
+    @css = 'new'
+    erb :movies_new
+end
+post '/movies' do
+    Movie.new(params).save
+    redirect to '/movies'
+end
+
+get '/movies/:id' do
+    @movie = Movie.find(params[:id].to_i)
+    @page = @movie.name
+    @css = 'item_view'
+    erb :movies_ID
+end
+
+get '/movies/:id/edit' do
+    @movie = Movie.find(params[:id].to_i)
+    @page = "Editing #{@movie.name}"
+    @css = 'item_edit'
+    erb :movies_ID_edit
+end
+patch '/movies/:id' do
+    Movie.find(params[:id].to_i).update(params)
+    redirect to "/movies/#{params[:id]}"
+end
+delete '/movies/:id' do
+    Movie.find(params[:id].to_i).delete
+    redirect to '/movies'
 end

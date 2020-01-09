@@ -1,13 +1,19 @@
+<h1>Theatrix</h1>
 <main>
     <h2>Find Theatres</h2>
     <hr>
 
     <% if @theatres.any? %>
-    <% @theatres.each do |theatre| %>
+    <% @theatres.each_with_index do |theatre, i| %>
+    <% if i > 0 %>
+    <hr class='spacer'>
+    <% end %>
     <a class='item' href='/theatres/<%= theatre.id %>'>
-        <img src='<%= theatre.img %>' alt='Image of <%=theatre.name%>'>
+        <figure>
+            <img src='<%= theatre.img %>' alt='Image of <%=theatre.name%>'>
+        </figure>
         <h3><%= theatre.name %></h3>
-        <p><%= theatre.location || 'Sorry, we don\'t have the address for this one :(' %></p>
+        <h4><%= theatre.location || 'Sorry, we don\'t have the address for this one :(' %></h4>
     </a>
     <% end %>
     <% else %>
